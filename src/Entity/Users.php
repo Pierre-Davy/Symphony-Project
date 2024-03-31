@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\UsersRepository;
+use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -34,6 +35,9 @@ class Users
 
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
+
+
+
 
     public function getId(): ?int
     {
