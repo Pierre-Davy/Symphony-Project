@@ -41,6 +41,10 @@ class Users
     #[ORM\ManyToMany(targetEntity: Groupes::class, inversedBy: 'users')]
     private Collection $groupes;
 
+    #[ORM\ManyToOne(inversedBy: 'users')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Cities $city = null;
+
     public function __construct()
     {
         $this->groupes = new ArrayCollection();
@@ -158,6 +162,18 @@ class Users
     public function removeGroupe(Groupes $groupe): static
     {
         $this->groupes->removeElement($groupe);
+
+        return $this;
+    }
+
+    public function getCity(): ?Cities
+    {
+        return $this->city;
+    }
+
+    public function setCity(?Cities $city): static
+    {
+        $this->city = $city;
 
         return $this;
     }

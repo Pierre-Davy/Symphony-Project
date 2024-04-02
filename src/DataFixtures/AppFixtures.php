@@ -2,12 +2,16 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Cities;
+use App\Entity\Countries;
+use App\Entity\Groupes;
 use Faker\Generator;
 use Faker\Factory;
 use App\Entity\Users;
 
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Symfony\Component\Intl\Countries as IntlCountries;
 
 class AppFixtures extends Fixture
 {
@@ -27,7 +31,21 @@ class AppFixtures extends Fixture
 
         for ($i = 0; $i < 50; $i++) {
 
+            $groupe = new Groupes();
+            $groupe->setName($this->faker->words(3, true));
 
+            $manager->persist($groupe);
+
+            $country = new Countries();
+            $country->setName($this->faker->country());
+
+            $manager->persist($country);
+
+            $city = new Cities();
+            $city->setName($this->faker->city());
+            $city->setCountry($country);
+
+            $manager->persist($city);
 
             $user = new Users();
             $user->setLastName($this->faker->lastName())
@@ -36,7 +54,9 @@ class AppFixtures extends Fixture
                 ->setDateOfBirth($this->faker->dateTime())
                 ->setJob($this->faker->jobTitle())
                 ->setIntro($this->faker->words(10, true))
-                ->setDescription($this->faker->words(50, true));
+                ->setDescription($this->faker->words(50, true))
+                ->addGroupe($groupe)
+                ->setCity($city);
 
 
             $manager->persist($user);
