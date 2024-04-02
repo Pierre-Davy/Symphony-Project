@@ -10,7 +10,7 @@
 
 <div class="example-wrapper">
     {% for user in users %}
-    id numéro {{user.id}}
+    <a href="{{path('show', {id: user.id})}}" target="_blank">id numéro {{user.id}}</a>
     <br>
     {{user.last_name}}
     {{user.first_name}}

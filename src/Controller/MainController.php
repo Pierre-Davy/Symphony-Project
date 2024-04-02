@@ -11,14 +11,11 @@ use Symfony\Component\Routing\Attribute\Route;
 class MainController extends AbstractController
 {
     #[Route('/users', name: 'index')]
-
     public function index(UsersRepository $repository): Response
     {
         $users = $repository->findAll();
 
         shuffle($users);
-
-
 
         return $this->render(
             'main/index.html.twig',
@@ -26,5 +23,13 @@ class MainController extends AbstractController
                 'users' => $users,
             ]
         );
+    }
+
+    #[Route('/users/{id}', name: 'show')]
+    public function show(Users $user): Response
+    {
+        return $this->render('main/show.html.twig', [
+            'user' => $user
+        ]);
     }
 }
