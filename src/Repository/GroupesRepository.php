@@ -21,6 +21,20 @@ class GroupesRepository extends ServiceEntityRepository
         parent::__construct($registry, Groupes::class);
     }
 
+
+    public function findByUser($idUser): array
+    {
+        $id = htmlspecialchars($idUser);
+
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = 'SELECT groupes.name FROM users_groupes INNER JOIN groupes WHERE users_id = :id AND groupes_id = groupes.id';
+
+        $resultSet = $conn->executeQuery($sql, ['id' => $id]);
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $resultSet->fetchAllAssociative();
+    }
     //    /**
     //     * @return Groupes[] Returns an array of Groupes objects
     //     */

@@ -27,6 +27,17 @@
     <br>
     <h3>Description</h3>
     {{user.description}}
+    <br>
+    <h3>Ville</h3>
+    {{city.name}}
+    <br>
+    <h3>Pays</h3>
+    {{country.name}}
+    <br>
+    <h3>Groupe</h3>
+    {% for groupe in groupes %}
+    {{groupe.name}}
+    {% endfor %}
     
     
 </div>

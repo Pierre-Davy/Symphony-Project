@@ -21,28 +21,28 @@ class CitiesRepository extends ServiceEntityRepository
         parent::__construct($registry, Cities::class);
     }
 
-    //    /**
-    //     * @return Cities[] Returns an array of Cities objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('c')
-    //            ->andWhere('c.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('c.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    public function findAll(): array
+    {
+        $conn = $this->getEntityManager()->getConnection();
 
-    //    public function findOneBySomeField($value): ?Cities
-    //    {
-    //        return $this->createQueryBuilder('c')
-    //            ->andWhere('c.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+        $sql = 'SELECT * FROM cities';
+
+        $resultSet = $conn->executeQuery($sql);
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $resultSet->fetchAllAssociative();
+    }
+    public function findById($id): array
+    {
+        $idParam = htmlspecialchars($id);
+
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = 'SELECT * FROM cities WHERE id = :id';
+
+        $resultSet = $conn->executeQuery($sql, ['id' => $idParam]);
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $resultSet->fetchAllAssociative();
+    }
 }
